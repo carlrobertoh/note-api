@@ -1,0 +1,19 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  flyway:
+    schemas: public
+    locations: filesystem:src/main/resources/migrations
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+springdoc:
+  api-docs:
+    path: /docs/json
+  swagger-ui:
+    path: /docs

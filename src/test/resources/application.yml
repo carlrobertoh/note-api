@@ -1,0 +1,7 @@
+spring:
+  flyway:
+    schemas: public
+    locations: filesystem:src/main/resources/migrations
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:postgresql:11.5://localhost/test
