@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,13 +38,13 @@ class NoteController {
     return new ResponseEntity<>(noteService.create(noteRequest), HttpStatus.CREATED);
   }
 
-  @PatchMapping("/{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<ApiNoteDto> updateNote(@PathVariable Long id,
                                                @RequestBody ApiNotePayloadDto noteRequest) {
     return new ResponseEntity<>(noteService.update(id, noteRequest), HttpStatus.CREATED);
   }
 
-  @DeleteMapping(value = "/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity deleteNote(@PathVariable Long id) {
     noteService.delete(id);
     return new ResponseEntity(HttpStatus.NO_CONTENT);
