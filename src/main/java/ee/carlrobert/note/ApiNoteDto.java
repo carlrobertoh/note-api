@@ -5,11 +5,13 @@ public class ApiNoteDto {
   private final Long id;
   private final String author;
   private final String text;
+  private final boolean editingAllowed;
 
-  public ApiNoteDto(Long id, String author, String text) {
+  public ApiNoteDto(Long id, String author, String text, boolean editingAllowed) {
     this.id = id;
     this.author = author;
     this.text = text;
+    this.editingAllowed = editingAllowed;
   }
 
   public Long getId() {
@@ -22,5 +24,9 @@ public class ApiNoteDto {
 
   public String getText() {
     return text;
+  }
+
+  public boolean isEditingAllowed() {
+    return editingAllowed;
   }
 }

@@ -5,11 +5,11 @@ import ee.carlrobert.note.ApiNotePayloadDto;
 import ee.carlrobert.note.NoteService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,13 +29,14 @@ class NoteController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ApiNoteDto>> findAll() {
-    return new ResponseEntity<>(noteService.findAll(), HttpStatus.OK);
+  public ResponseEntity<List<ApiNoteDto>> findAll(HttpServletRequest request) {
+    return new ResponseEntity<>(noteService.findAll(request.getRemoteAddr()), HttpStatus.OK);
   }
 
   @PostMapping
-  public ResponseEntity<ApiNoteDto> createNote(@RequestBody ApiNotePayloadDto noteRequest) {
-    return new ResponseEntity<>(noteService.create(noteRequest), HttpStatus.CREATED);
+  public ResponseEntity<ApiNoteDto> createNote(@RequestBody ApiNotePayloadDto noteRequest,
+                                               HttpServletRequest request) {
+    return new ResponseEntity<>(noteService.create(noteRequest, request.getRemoteAddr()), HttpStatus.CREATED);
   }
 
   @PutMapping("/{id}")

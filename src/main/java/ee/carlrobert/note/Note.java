@@ -1,5 +1,6 @@
 package ee.carlrobert.note;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,28 +14,38 @@ class Note {
   private Long id;
   private String author;
   private String text;
-
-  void setId(Long id) {
-    this.id = id;
-  }
+  @Column(name = "REMOTE_ADDR")
+  private String remoteAddr;
 
   Long getId() {
     return id;
   }
 
-  void setAuthor(String author) {
-    this.author = author;
+  void setId(Long id) {
+    this.id = id;
   }
 
   String getAuthor() {
     return author;
   }
 
-  void setText(String text) {
-    this.text = text;
+  void setAuthor(String author) {
+    this.author = author;
   }
 
   String getText() {
     return text;
+  }
+
+  void setText(String text) {
+    this.text = text;
+  }
+
+  String getRemoteAddr() {
+    return remoteAddr;
+  }
+
+  void setRemoteAddr(String remoteAddr) {
+    this.remoteAddr = remoteAddr;
   }
 }

@@ -16,7 +16,7 @@ class NoteIntegrationTest extends IntegrationTest {
     var response = get("/v1/note");
 
     assertJsonArray(response)
-        .extracting("author", "text")
-        .containsExactly(tuple("NOTE_AUTHOR", "NOTE_TEXT"));
+        .extracting("author", "text", "editingAllowed")
+        .containsExactly(tuple("NOTE_AUTHOR", "NOTE_TEXT", true));
   }
 }

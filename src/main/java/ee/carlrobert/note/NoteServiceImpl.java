@@ -15,11 +15,12 @@ class NoteServiceImpl implements NoteService {
   }
 
   @Override
-  public ApiNoteDto create(ApiNotePayloadDto noteRequest) {
+  public ApiNoteDto create(ApiNotePayloadDto noteRequest, String remoteAddr) {
     Note note = new Note();
     note.setAuthor(noteRequest.getAuthor());
     note.setText(noteRequest.getText());
-    return mapToApiNoteDto(noteRepository.save(note));
+    note.setRemoteAddr(remoteAddr);
+    return mapToApiNoteDto(noteRepository.save(note), remoteAddr);
   }
 
   @Override
@@ -31,13 +32,13 @@ class NoteServiceImpl implements NoteService {
     if (noteRequest.getText() != null) {
       note.setText(noteRequest.getText());
     }
-    return mapToApiNoteDto(noteRepository.save(note));
+    return mapToApiNoteDto(noteRepository.save(note), note.getRemoteAddr());
   }
 
   @Override
-  public List<ApiNoteDto> findAll() {
+  public List<ApiNoteDto> findAll(String remoteAddr) {
     return noteRepository.findAll().stream()
-        .map(note -> new ApiNoteDto(note.getId(), note.getAuthor(), note.getText()))
+        .map(note -> mapToApiNoteDto(note, remoteAddr))
         .collect(toList());
   }
 
@@ -46,8 +47,8 @@ class NoteServiceImpl implements NoteService {
     noteRepository.deleteById(id);
   }
 
-  private ApiNoteDto mapToApiNoteDto(Note note) {
-    return new ApiNoteDto(note.getId(), note.getAuthor(), note.getText());
+  private ApiNoteDto mapToApiNoteDto(Note note, String remoteAddr) {
+    return new ApiNoteDto(note.getId(), note.getAuthor(), note.getText(), remoteAddr.equals(note.getRemoteAddr()));
   }
 }
 
